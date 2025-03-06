@@ -57,6 +57,10 @@ public class MirrorWithSurfaceAlignedFrustum : MonoBehaviour {
     private void LateUpdate() {
     }
 
+    public void RenderMirrorWithCamera(
+        Camera mainCamera)
+    { }
+
 
     private void RenderMirror() {
         if (!mirrorCamera || !mainCamera) return;
@@ -149,7 +153,7 @@ public class MirrorWithSurfaceAlignedFrustum : MonoBehaviour {
             Debug.Log("Avoid division by zero");
         }
         
-        Debug.Log("d: " + d + " distance: "+ nearClip);
+        Debug.Log("d: " + d + " distance: "+ nearClip+" far clip: " + farClip);
 
         // Compute the extents of the screen in eye space at the near clip plane.
         // These extents are found by projecting the vectors from the eye to each corner
@@ -160,7 +164,7 @@ public class MirrorWithSurfaceAlignedFrustum : MonoBehaviour {
         float t = Vector3.Dot(vu, pc-pe) * nearClip / d;
 
         // Create the off-axis projection matrix based on these extents.
-        return Matrix4x4.Frustum(l, r, b, t, nearClip, farClip);
+        return Matrix4x4.Frustum(-l, -r, -b, -t, -nearClip, -farClip);
 
     }
 }
