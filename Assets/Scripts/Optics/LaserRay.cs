@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class LaserRay : MonoBehaviour
 {
     public LaserColor laserColor;
+    public LineRenderer lineRenderer;
     private List<Vector3> m_LaserPath = new List<Vector3>();
     public Vector3 Direction { get; private set; }
     
@@ -22,6 +23,15 @@ public class LaserRay : MonoBehaviour
         isInside = false;
         m_LaserPath.Clear();
         CastLaser(transform.position, rayDirection);
+        RenderLaser();
+    }
+
+    public void RenderLaser(){
+        lineRenderer.positionCount = m_LaserPath.Count;
+        for (int i = 0; i < m_LaserPath.Count; i++)
+        {
+            lineRenderer.SetPosition(i,m_LaserPath[i]);
+        }
     }
 
     public void CastLaser(Vector3 origin, Vector3 direction)
